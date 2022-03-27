@@ -30,6 +30,7 @@ public class EntityController {
 	public RestInnEntity getEntity(@PathVariable String entityId) {
 		if (entityService.getEntity(entityId) != null) {
 			return entityService.getEntity(entityId);
+			 
 		} else {
 			return new RestInnEntity();
 		}

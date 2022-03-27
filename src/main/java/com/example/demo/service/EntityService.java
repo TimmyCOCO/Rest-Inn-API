@@ -27,8 +27,8 @@ public class EntityService {
 
 		if (entity.isPresent()) {
 			return entity.get();
-		} else {
-			return new RestInnEntity();
+		}else {
+			return null;
 		}
 	}
 
@@ -37,6 +37,7 @@ public class EntityService {
 		return entityDao.save(entity);
 	}
 
+	// delete an entity
 	public void deleteEntity(String entityId) {
 		entityDao.deleteById(entityId);
 	}
