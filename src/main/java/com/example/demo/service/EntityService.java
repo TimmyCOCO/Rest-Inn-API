@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.RestInnEntity;
@@ -21,15 +22,20 @@ public class EntityService {
 		return entityDao.findAll();
 	}
 
-	// get specific entity
+	// get a specific entity by Id
 	public RestInnEntity getEntity(String entityId) {
 		Optional<RestInnEntity> entity = entityDao.findById(entityId);
 
 		if (entity.isPresent()) {
 			return entity.get();
-		}else {
+		} else {
 			return null;
 		}
+	}
+
+	// get a specific entity by type
+	public List<RestInnEntity> getEntitiesByType(String type) {
+		return entityDao.findByType(type);
 	}
 
 	// add an entity
@@ -41,7 +47,5 @@ public class EntityService {
 	public void deleteEntity(String entityId) {
 		entityDao.deleteById(entityId);
 	}
-	
-	
 
 }

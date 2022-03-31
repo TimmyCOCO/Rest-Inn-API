@@ -16,7 +16,7 @@ public class RestInnEntity {
 	private BigDecimal price;
 	private String type;
 	private String rules;
-	private String Amenities;
+	private String amenities;
 	private String location;
 
 	public RestInnEntity() {
@@ -33,7 +33,7 @@ public class RestInnEntity {
 		this.price = price;
 		this.type = type;
 		this.rules = rules;
-		Amenities = amenities;
+		this.amenities = amenities;
 		this.location = location;
 	}
 
@@ -94,11 +94,11 @@ public class RestInnEntity {
 	}
 
 	public String getAmenities() {
-		return Amenities;
+		return amenities;
 	}
 
 	public void setAmenities(String amenities) {
-		Amenities = amenities;
+		this.amenities = amenities;
 	}
 
 	public String getLocation() {

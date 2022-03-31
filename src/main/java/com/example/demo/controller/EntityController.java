@@ -3,11 +3,14 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.RestInnEntity;
@@ -25,7 +28,7 @@ public class EntityController {
 		return entityService.getAllEntities();
 	}
 
-	// get specific entity
+	// get a specific entity by Id
 	@GetMapping("/Entities/{entityId}")
 	public RestInnEntity getEntity(@PathVariable String entityId) {
 		if (entityService.getEntity(entityId) != null) {
@@ -35,6 +38,13 @@ public class EntityController {
 			return new RestInnEntity();
 		}
 	}
+	
+	// get a specific entity by type
+	@GetMapping("/Entities/entityType")
+	public ResponseEntity<List<RestInnEntity>> getEntitiesByType(@RequestParam String type){
+		return new ResponseEntity<>(entityService.getEntitiesByType(type), HttpStatus.OK);
+	}
+	
 
 	// add new entities
 	@PostMapping("/Entities")
