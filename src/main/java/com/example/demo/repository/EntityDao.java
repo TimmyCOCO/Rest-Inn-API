@@ -7,6 +7,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import com.example.demo.entity.RestInnEntity;
 
 public interface EntityDao extends MongoRepository<RestInnEntity, String> {
-	// get a specific entity by type
-	List<RestInnEntity> findByType(String type);
+	// get entities by type
+	List<RestInnEntity> findByTitleOrType(String title, String type);
+	
+	// get entities that is best seller
+	List<RestInnEntity> findByisBestSeller(Boolean isBestSeller);
 }

@@ -1,7 +1,5 @@
 package com.example.demo.entity;
 
-import java.math.BigDecimal;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,21 +8,22 @@ public class RestInnEntity {
 
 	@Id
 	private String id;
-	private String image; // ?
+	private String image;
 	private String title;
 	private String description;
-	private BigDecimal price;
+	private Double price;
 	private String type;
 	private String rules;
 	private String amenities;
 	private String location;
+	private Boolean isBestSeller = false;
 
 	public RestInnEntity() {
 		super();
 	}
 
-	public RestInnEntity(String id, String image, String title, String description, BigDecimal price, String type,
-			String rules, String amenities, String location) {
+	public RestInnEntity(String id, String image, String title, String description, Double price, String type,
+			String rules, String amenities, String location, Boolean isBestSeller) {
 		super();
 		this.id = id;
 		this.image = image;
@@ -35,6 +34,7 @@ public class RestInnEntity {
 		this.rules = rules;
 		this.amenities = amenities;
 		this.location = location;
+		this.isBestSeller = isBestSeller;
 	}
 
 	public String getId() {
@@ -69,11 +69,11 @@ public class RestInnEntity {
 		this.description = description;
 	}
 
-	public BigDecimal getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 
@@ -107,6 +107,14 @@ public class RestInnEntity {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public Boolean getIsBestSeller() {
+		return isBestSeller;
+	}
+
+	public void setIsBestSeller(Boolean isBestSeller) {
+		this.isBestSeller = isBestSeller;
 	}
 
 }

@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,27 +20,47 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 
+	private Customer customer;
+	private List<Customer> customerList;
+
 	// get all customer info
-	@GetMapping("/Customers")
-	public List<Customer> getAllCustomers() {
-		return customerService.getAllCustomers();
+	@GetMapping("/customers")
+	public ResponseEntity<List<Customer>> getAllCustomers() {
+		customerList = customerService.getAllCustomers();
+
+		if(!customerList.isEmpty()) {
+			return new ResponseEntity<List<Customer>>(customerList, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	// get specific customer info
-	@GetMapping("/Customers/{customerId}")
-	public Customer getCustomer(@PathVariable String customerId) {
-		if(customerService.getCustomer(customerId) !=  null) {
-			return customerService.getCustomer(customerId);
+	@GetMapping("/customers/{customerId}")
+	public ResponseEntity<Customer> getCustomer(@PathVariable String customerId) {
+		customer = customerService.getCustomer(customerId);
+		
+		if(customer !=  null) {
+			return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 		}else {
-			return new Customer();
+			return new ResponseEntity<Customer>(new Customer(), HttpStatus.NOT_FOUND);
 		}
 
 	}
 
 	// add new customers
-	@PostMapping("/Customers")
-	public Customer addCustomer(@RequestBody Customer customer) {
-		return customerService.addCustomer(customer);
+	@PostMapping("/customers")
+	public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
+		
+		customer = customerService.addCustomer(customer);
+		
+		if(customer != null) {
+			return new ResponseEntity<Customer>(customer, HttpStatus.CREATED); 
+		}else {
+			return new ResponseEntity<String>("validation failed ",HttpStatus.BAD_REQUEST);
+		}
+		
+		
 	}
 
 }

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.RestInnEntity;
@@ -33,13 +32,31 @@ public class EntityService {
 		}
 	}
 
-	// get a specific entity by type
-	public List<RestInnEntity> getEntitiesByType(String type) {
-		return entityDao.findByType(type);
+	// get entities by title or title
+	public List<RestInnEntity> getEntitiesByTitleOrType(String title, String type) {
+		return entityDao.findByTitleOrType(title, type);
+	}
+
+	// get entities that is best seller
+	public List<RestInnEntity> getEntitiesByisBestSeller(Boolean isBestSeller) {
+		return entityDao.findByisBestSeller(isBestSeller);
 	}
 
 	// add an entity
 	public RestInnEntity addEntity(RestInnEntity entity) {
+		// validation logic: require title, price, type, location
+
+		if (entity.getTitle() == null || entity.getPrice() == null || entity.getType() == null
+				||  entity.getLocation() == null) {
+			// do not add into database
+			return null;
+		}
+
+		return entityDao.save(entity);
+	}
+
+	// update an entity
+	public RestInnEntity updateEntity(RestInnEntity entity) {
 		return entityDao.save(entity);
 	}
 
