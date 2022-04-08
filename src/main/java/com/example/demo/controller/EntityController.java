@@ -50,7 +50,7 @@ public class EntityController {
 			return new ResponseEntity<RestInnEntity>(restInnEntityId, HttpStatus.OK);
 
 		} else {
-			return new ResponseEntity<RestInnEntity>(new RestInnEntity(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<RestInnEntity>(HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -72,6 +72,7 @@ public class EntityController {
 			return new ResponseEntity<List<RestInnEntity>>(restInnEntityListByTitleOrType, HttpStatus.OK);
 			
 		} else {
+			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
@@ -98,7 +99,7 @@ public class EntityController {
 		if (restInnEntityContent != null) {
 			return new ResponseEntity<RestInnEntity>(restInnEntityContent, HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST) ;
 		}
 
 	}
