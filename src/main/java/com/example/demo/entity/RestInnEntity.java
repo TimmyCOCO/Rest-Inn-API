@@ -11,7 +11,7 @@ public class RestInnEntity {
 	private String image;
 	private String title;
 	private String description;
-	private Double price;
+	private Double price = 0.0;
 	private String type;
 	private String rules;
 	private String amenities;

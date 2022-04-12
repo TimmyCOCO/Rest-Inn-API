@@ -47,8 +47,9 @@ public class CustomerService implements UserDetailsService {
 	// add a user
 	public Customer addCustomer(Customer customer) {
 		// validation logic: require firstname, lastname, email, password
-		if(customer.getEmail() == null || customer.getFirstName() == null
-				|| customer.getLastName() == null || customer.getPassword() == null) {
+		if(customer.getEmail() == "" || customer.getFirstName() == ""
+				|| customer.getLastName() == "" || customer.getPassword() == "") {
+			// do not add into database
 			return null;
 		}
 		
@@ -57,7 +58,7 @@ public class CustomerService implements UserDetailsService {
 		
 		// modify the original password to encrypted password
 		customer.setPassword(encodedPassword);
-
+		
 		return customerDao.save(customer);
 	}
 

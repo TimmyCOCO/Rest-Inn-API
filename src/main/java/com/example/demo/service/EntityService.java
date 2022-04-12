@@ -46,13 +46,14 @@ public class EntityService {
 	public RestInnEntity addEntity(RestInnEntity entity) {
 		// validation logic: require title, price, type, location
 
-		if (entity.getTitle() == null || entity.getPrice() == null || entity.getType() == null
-				||  entity.getLocation() == null) {
+		if (entity.getTitle() == "" || entity.getPrice() == 0 || entity.getType() == ""
+				||  entity.getLocation() == "") {
 			// do not add into database
-			return null;
+			return null;	
 		}
-
+		// add into database
 		return entityDao.save(entity);
+
 	}
 
 	// update an entity

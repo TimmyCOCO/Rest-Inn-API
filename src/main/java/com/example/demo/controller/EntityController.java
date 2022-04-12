@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import com.example.demo.entity.RestInnEntity;
 import com.example.demo.service.EntityService;
 
 @RestController
+@CrossOrigin(origins="*")
 public class EntityController {
 
 	@Autowired
@@ -61,7 +63,7 @@ public class EntityController {
 		
 		restInnEntityListByTitleOrType = entityService.getEntitiesByTitleOrType(title, type);
 		
-		// title=&type= -> will retrieve all entities
+		// ?title=&type= -> will retrieve all entities
 		if (title == "" && type == "") {
 			
 			restInnEntityList = entityService.getAllEntities();
@@ -93,33 +95,38 @@ public class EntityController {
 
 	// add new entities
 	@PostMapping("/entities")
-	public ResponseEntity<RestInnEntity> addEntity(@RequestBody RestInnEntity entity) {
+	public ResponseEntity<?> addEntity(@RequestBody RestInnEntity entity) {
 		restInnEntityContent = entityService.addEntity(entity);
 
 		if (restInnEntityContent != null) {
 			return new ResponseEntity<RestInnEntity>(restInnEntityContent, HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST) ;
+			return new ResponseEntity<>("Error:missing data", HttpStatus.BAD_REQUEST) ;
 		}
 
 	}
 
 	// update an entity
 	@PutMapping("/entities/{entityId}")
-	public ResponseEntity<RestInnEntity> updateEntity(@RequestBody RestInnEntity entity,
+	public ResponseEntity<?> updateEntity(@RequestBody RestInnEntity entity,
 			@PathVariable String entityId) {
 
 		entity.setId(entityId);
 
 		restInnEntityId = entityService.getEntity(entityId);
 		restInnEntityContent = entityService.addEntity(entity);
-
+		
+		// if have specific id, then update the entity
 		if (restInnEntityId != null) {
-			// if have specific id, then update the entity
+			
+			if(restInnEntityContent == null) {
+				return new ResponseEntity<>("Error:missing data", HttpStatus.BAD_REQUEST);
+			}
+			
 			return new ResponseEntity<RestInnEntity>(restInnEntityContent, HttpStatus.OK);
 		} else {
-			// if don't have specific id, then create a new entity
-			return new ResponseEntity<RestInnEntity>(restInnEntityContent, HttpStatus.CREATED);
+			// if don't have specific id
+			return new ResponseEntity<>("Cannot find the id with " + entityId, HttpStatus.BAD_REQUEST);
 		}
 	}
 
