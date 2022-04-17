@@ -66,7 +66,7 @@ public class CustomerService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
 		Customer foundUser = customerDao.findByEmail(email);
-
+		
 		String userN = foundUser.getEmail();
 		String password = foundUser.getPassword();
 
